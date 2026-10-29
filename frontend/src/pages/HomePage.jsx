@@ -42,11 +42,11 @@ export function HomePage() {
   return (
     <Layout
       title="Organizations"
-      subtitle="Your workspaces"
+      subtitle="Organizations you are a member of"
       actions={
         <Button size="sm" onClick={() => setShowCreate((v) => !v)}>
           <Plus className="size-3.5" />
-          New org
+          New organization
         </Button>
       }
     >
@@ -101,7 +101,9 @@ export function HomePage() {
       ) : orgs.length === 0 ? (
         <div className="rounded-lg border border-dashed border-border px-6 py-16 text-center">
           <p className="text-sm font-medium">No organizations yet</p>
-          <p className="mt-1 text-[13px] text-muted-foreground">Create a workspace to start shipping.</p>
+          <p className="mt-1 text-[13px] text-muted-foreground">
+            Create an organization to add projects and work items.
+          </p>
           <Button className="mt-4" size="sm" onClick={() => setShowCreate(true)}>
             <Plus className="size-3.5" /> New organization
           </Button>

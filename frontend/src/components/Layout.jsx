@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/auth";
+import { Logo } from "@/components/Logo";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -53,17 +54,14 @@ export function Layout({ title, subtitle, orgId, crumbs, children, wide, actions
   return (
     <div className="flex min-h-screen bg-background">
       <aside className="sticky top-0 z-30 flex h-screen w-[220px] shrink-0 flex-col border-r border-sidebar-border bg-sidebar max-lg:h-auto max-lg:w-full max-lg:border-b max-lg:border-r-0">
-        <div className="flex h-12 items-center gap-2 border-b border-sidebar-border px-3">
-          <div className="grid size-5 place-items-center rounded bg-primary text-[10px] font-bold text-primary-foreground">
-            K
-          </div>
-          <span className="truncate text-[13px] font-semibold tracking-tight">KubeFlow</span>
+        <div className="flex h-12 items-center border-b border-sidebar-border px-3">
+          <Logo />
         </div>
 
         <nav className="flex-1 space-y-4 overflow-y-auto px-2 py-3">
           <div className="space-y-0.5">
             <p className="mb-1 px-2 text-[11px] font-medium uppercase tracking-wider text-muted-foreground/70">
-              Workspace
+              Navigation
             </p>
             <NavItem to="/" active={onHome} icon={Building2}>
               Organizations
@@ -73,13 +71,13 @@ export function Layout({ title, subtitle, orgId, crumbs, children, wide, actions
           {orgId ? (
             <div className="space-y-0.5">
               <p className="mb-1 px-2 text-[11px] font-medium uppercase tracking-wider text-muted-foreground/70">
-                Organization
+                Current organization
               </p>
               <NavItem to={`/orgs/${orgId}`} active={onOrg || onBoard} icon={FolderKanban}>
                 Projects
               </NavItem>
               <NavItem to={`/orgs/${orgId}/dashboard`} active={onDash} icon={BarChart3}>
-                Insights
+                Dashboard
               </NavItem>
             </div>
           ) : null}
@@ -110,7 +108,7 @@ export function Layout({ title, subtitle, orgId, crumbs, children, wide, actions
               </div>
             ) : null}
             <div className="flex items-baseline gap-2">
-              <h1 className="truncate text-[15px] font-semibold tracking-tight">{title || "KubeFlow"}</h1>
+              <h1 className="truncate text-[15px] font-semibold tracking-tight">{title || "Lumen"}</h1>
               {subtitle ? (
                 <p className="hidden truncate text-[12px] text-muted-foreground sm:block">{subtitle}</p>
               ) : null}

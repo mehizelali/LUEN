@@ -5,8 +5,10 @@
 !**/.env.example
 backend/.env
 frontend/.env
-deploy/k8s/secrets.yaml
-deploy/k8s/*-secrets.local.yaml
+
+# Local / not published yet
+deploy/
+
 *.pem
 *.key
 *.p12

@@ -17,7 +17,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 
 function StatusIcon({ category, className }) {
-  if (category === "done") return <CheckCircle2 className={cn("size-3.5 text-teal-600", className)} />;
+  if (category === "done") return <CheckCircle2 className={cn("size-3.5 text-[#003049]", className)} />;
   if (category === "started") return <CircleDot className={cn("size-3.5 text-amber-500", className)} />;
   return <Circle className={cn("size-3.5 text-muted-foreground", className)} />;
 }
@@ -113,7 +113,7 @@ export function BoardPage() {
       await loadBoard(q);
       await openItem(created);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Could not create task");
+      setError(err instanceof Error ? err.message : "Could not create work item");
     } finally {
       setCreating(false);
     }
@@ -174,13 +174,13 @@ export function BoardPage() {
     <Layout
       wide
       orgId={project?.org_id}
-      title={project ? project.name : "Issues"}
+      title={project ? project.name : "Work items"}
       subtitle={project ? project.key : undefined}
       crumbs={
         project ? (
           <>
             <Link to="/" className="hover:text-foreground">
-              Orgs
+              Organizations
             </Link>
             <CrumbSep />
             <Link to={`/orgs/${project.org_id}`} className="hover:text-foreground">
@@ -197,12 +197,11 @@ export function BoardPage() {
           onClick={() => setComposerOpen(true)}
         >
           <Plus className="size-3.5" />
-          New issue
+          New work item
         </Button>
       }
     >
       <div className="flex min-h-[calc(100vh-3rem)]">
-        {/* Issue stream */}
         <div
           className={cn(
             "flex min-w-0 flex-1 flex-col border-r border-border",
@@ -220,7 +219,7 @@ export function BoardPage() {
               <Search className="size-3.5 shrink-0 text-muted-foreground" />
               <input
                 className="h-8 w-full bg-transparent text-[13px] outline-none placeholder:text-muted-foreground"
-                placeholder="Filter issues…"
+                placeholder="Search work items…"
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
               />
@@ -237,7 +236,7 @@ export function BoardPage() {
                 autoFocus
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                placeholder="Issue title"
+                placeholder="Work item title"
                 required
                 disabled={creating}
                 className="border-0 bg-transparent px-0 text-[14px] font-medium shadow-none focus-visible:ring-0"
@@ -248,6 +247,7 @@ export function BoardPage() {
                   value={statusId}
                   onChange={(e) => setStatusId(e.target.value)}
                   disabled={creating || !statuses.length}
+                  aria-label="Status"
                 >
                   {statuses.map((s) => (
                     <option key={s.id} value={s.id}>
@@ -260,10 +260,11 @@ export function BoardPage() {
                   value={priority}
                   onChange={(e) => setPriority(e.target.value)}
                   disabled={creating}
+                  aria-label="Priority"
                 >
                   {["low", "medium", "high", "urgent"].map((p) => (
                     <option key={p} value={p}>
-                      {p}
+                      {p.charAt(0).toUpperCase() + p.slice(1)}
                     </option>
                   ))}
                 </select>
@@ -295,12 +296,12 @@ export function BoardPage() {
               <p className="px-4 py-8 text-[13px] text-muted-foreground">Loading…</p>
             ) : items.length === 0 ? (
               <div className="px-6 py-16 text-center">
-                <p className="text-sm font-medium">No issues</p>
+                <p className="text-sm font-medium">No work items</p>
                 <p className="mt-1 text-[13px] text-muted-foreground">
-                  Create the first issue to start the stream.
+                  Create a work item to track work in this project.
                 </p>
                 <Button className="mt-4" size="sm" onClick={() => setComposerOpen(true)}>
-                  <Plus className="size-3.5" /> New issue
+                  <Plus className="size-3.5" /> New work item
                 </Button>
               </div>
             ) : (
@@ -341,7 +342,6 @@ export function BoardPage() {
           </div>
         </div>
 
-        {/* Detail pane */}
         <aside
           className={cn(
             "flex w-full shrink-0 flex-col bg-background xl:w-[420px]",
@@ -350,9 +350,9 @@ export function BoardPage() {
         >
           {!selected ? (
             <div className="grid flex-1 place-content-center px-8 text-center">
-              <p className="text-sm font-medium text-muted-foreground">Select an issue</p>
+              <p className="text-sm font-medium text-muted-foreground">Select a work item</p>
               <p className="mt-1 text-[12px] text-muted-foreground/70">
-                Details and properties appear here.
+                Status, priority, description, and comments appear here.
               </p>
             </div>
           ) : (
@@ -406,7 +406,7 @@ export function BoardPage() {
                     >
                       {["low", "medium", "high", "urgent"].map((p) => (
                         <option key={p} value={p}>
-                          {p}
+                          {p.charAt(0).toUpperCase() + p.slice(1)}
                         </option>
                       ))}
                     </select>
@@ -420,7 +420,7 @@ export function BoardPage() {
                   <Textarea
                     rows={6}
                     value={selected.description ?? ""}
-                    placeholder="Add description…"
+                    placeholder="Add a description…"
                     className="border-border/80 bg-muted/20"
                     onChange={(e) => setSelected({ ...selected, description: e.target.value })}
                     onBlur={() => saveSelected({ description: selected.description })}
@@ -429,7 +429,7 @@ export function BoardPage() {
 
                 <div>
                   <p className="mb-2 flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
-                    <MessageSquare className="size-3" /> Activity
+                    <MessageSquare className="size-3" /> Comments
                   </p>
                   <div className="space-y-3">
                     {comments.length === 0 && (

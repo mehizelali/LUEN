@@ -48,11 +48,13 @@ export function OrgPage() {
     <Layout
       orgId={orgId}
       title="Projects"
-      subtitle={dash ? `${dash.my_open_tasks} open for you` : undefined}
+      subtitle={
+        dash ? `${dash.my_open_tasks} open work item${dash.my_open_tasks === 1 ? "" : "s"} assigned to you` : undefined
+      }
       crumbs={
         <>
           <Link to="/" className="hover:text-foreground">
-            Orgs
+            Organizations
           </Link>
           <CrumbSep />
           <span className="text-foreground/80">Projects</span>
@@ -64,7 +66,7 @@ export function OrgPage() {
             <Button asChild size="sm" variant="outline">
               <Link to={`/orgs/${orgId}/dashboard`}>
                 <LayoutDashboard className="size-3.5" />
-                Insights
+                Dashboard
               </Link>
             </Button>
           )}
@@ -115,7 +117,7 @@ export function OrgPage() {
         <div className="rounded-lg border border-dashed border-border px-6 py-16 text-center">
           <p className="text-sm font-medium">No projects yet</p>
           <p className="mt-1 text-[13px] text-muted-foreground">
-            Create one to get default workflow statuses.
+            Create a project to manage work items and statuses.
           </p>
           <Button className="mt-4" size="sm" onClick={() => setShowCreate(true)}>
             <Plus className="size-3.5" /> New project
@@ -144,7 +146,7 @@ export function OrgPage() {
                 <div className="min-w-0">
                   <p className="truncate text-[13px] font-medium">{p.name}</p>
                   <p className="truncate text-[12px] text-muted-foreground">
-                    {p.description || "Open issues"}
+                    {p.description || "View work items"}
                   </p>
                 </div>
                 <div className="text-right">

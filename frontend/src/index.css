@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* Light SaaS shell — zinc surfaces, teal accent (no dark / no indigo) */
+/* Theme tokens */
 @theme inline {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --radius-sm: calc(var(--radius) - 2px);
@@ -34,29 +34,29 @@
 
 :root {
   --radius: 0.375rem;
-  --background: #f7f7f5;
-  --foreground: #1a1a19;
+  --background: #f4f6fa;
+  --foreground: #0f172a;
   --card: #ffffff;
-  --card-foreground: #1a1a19;
+  --card-foreground: #0f172a;
   --popover: #ffffff;
-  --popover-foreground: #1a1a19;
-  --primary: #0f766e;
-  --primary-foreground: #f0fdfa;
-  --secondary: #f0efed;
-  --secondary-foreground: #3f3f3a;
-  --muted: #f0efed;
-  --muted-foreground: #6b6b64;
-  --accent: #ecebe8;
-  --accent-foreground: #1a1a19;
+  --popover-foreground: #0f172a;
+  --primary: #003049;
+  --primary-foreground: #f8fafc;
+  --secondary: #eef2f7;
+  --secondary-foreground: #1e293b;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #e8eef7;
+  --accent-foreground: #0f172a;
   --destructive: #dc2626;
-  --border: #e4e3df;
-  --input: #e4e3df;
-  --ring: #0f766e;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #003049;
   --sidebar: #ffffff;
-  --sidebar-foreground: #5c5c56;
-  --sidebar-accent: #f0efed;
-  --sidebar-accent-foreground: #1a1a19;
-  --sidebar-border: #e4e3df;
+  --sidebar-foreground: #475569;
+  --sidebar-accent: #eef2f7;
+  --sidebar-accent-foreground: #0f172a;
+  --sidebar-border: #e2e8f0;
 }
 
 @layer base {
@@ -85,7 +85,7 @@
 
   select.select-field {
     @apply flex h-8 w-full appearance-none rounded-md border border-input bg-card px-2.5 text-[13px] text-foreground outline-none transition-colors focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b6b64' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 0.55rem center;
     padding-right: 1.75rem;
@@ -93,6 +93,6 @@
 
   select.select-field option {
     background: #ffffff;
-    color: #1a1a19;
+    color: #0f172a;
   }
 }

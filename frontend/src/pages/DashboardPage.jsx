@@ -22,17 +22,17 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
-const FLOW_COLORS = { backlog: "#9ca3af", started: "#f59e0b", done: "#0f766e" };
+const FLOW_COLORS = { backlog: "#94a3b8", started: "#f59e0b", done: "#003049" };
 const PRIORITY_COLORS = {
   urgent: "#e11d48",
   high: "#ea580c",
-  medium: "#0d9488",
-  low: "#9ca3af",
+  medium: "#3b82f6",
+  low: "#94a3b8",
 };
-const ACCENT = "#0f766e";
-const CYAN = "#0891b2";
-const GRID = "#e4e3df";
-const TICK = "#6b6b64";
+const ACCENT = "#003049";
+const CYAN = "#669bbc";
+const GRID = "#e2e8f0";
+const TICK = "#64748b";
 
 function Kpi({ label, value, hint, warn }) {
   return (
@@ -63,10 +63,10 @@ function ChartCard({ title, subtitle, children }) {
 
 const tip = {
   background: "#ffffff",
-  border: "1px solid #e4e3df",
+  border: "1px solid #e2e8f0",
   borderRadius: 6,
   fontSize: 12,
-  color: "#1a1a19",
+  color: "#0f172a",
 };
 
 export function DashboardPage() {
@@ -136,19 +136,19 @@ export function DashboardPage() {
   return (
     <Layout
       orgId={orgId}
-      title="Insights"
-      subtitle="Delivery health"
+      title="Dashboard"
+      subtitle="Organization overview"
       crumbs={
         <>
           <Link to="/" className="hover:text-foreground">
-            Orgs
+            Organizations
           </Link>
           <CrumbSep />
           <Link to={`/orgs/${orgId}`} className="hover:text-foreground">
             Projects
           </Link>
           <CrumbSep />
-          <span className="text-foreground/80">Insights</span>
+          <span className="text-foreground/80">Dashboard</span>
         </>
       }
       actions={
@@ -168,26 +168,26 @@ export function DashboardPage() {
         <>
           <div className="mb-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
             <Kpi
-              label="Completion"
+              label="Completion rate"
               value={`${kpis.completion_rate ?? 0}%`}
-              hint={`${summary.done_tasks}/${summary.total_tasks} done`}
+              hint={`${summary.done_tasks}/${summary.total_tasks} work items done`}
             />
             <Kpi
-              label="Risk index"
+              label="Risk score"
               value={kpis.risk_index ?? 0}
-              hint="Overdue + unassigned + priority pressure"
+              hint="Based on overdue, unassigned, and high-priority items"
               warn={(kpis.risk_index || 0) >= 60}
             />
             <Kpi
               label="Overdue rate"
               value={`${kpis.overdue_rate ?? 0}%`}
-              hint={`${summary.overdue} past due`}
+              hint={`${summary.overdue} work items past due`}
               warn={(kpis.overdue_rate || 0) > 20}
             />
             <Kpi
-              label="14d created"
+              label="Created (14 days)"
               value={kpis.throughput_14d ?? 0}
-              hint={`${kpis.active_contributors ?? 0} contributors`}
+              hint={`${kpis.active_contributors ?? 0} active members`}
             />
           </div>
 
@@ -219,7 +219,7 @@ export function DashboardPage() {
               </ResponsiveContainer>
             </ChartCard>
 
-            <ChartCard title="Flow mix" subtitle="Backlog / started / done">
+            <ChartCard title="Status categories" subtitle="Backlog, started, and done">
               <ResponsiveContainer width="100%" height={220}>
                 <PieChart>
                   <Pie
@@ -240,7 +240,7 @@ export function DashboardPage() {
               </ResponsiveContainer>
             </ChartCard>
 
-            <ChartCard title="Priority pressure" subtitle="Open work by priority">
+            <ChartCard title="Open by priority" subtitle="Open work items by priority">
               <ResponsiveContainer width="100%" height={210}>
                 <BarChart data={priorityData}>
                   <CartesianGrid strokeDasharray="3 3" stroke={GRID} />
@@ -256,7 +256,7 @@ export function DashboardPage() {
               </ResponsiveContainer>
             </ChartCard>
 
-            <ChartCard title="Workload" subtitle="Open vs done by person">
+            <ChartCard title="Member workload" subtitle="Open vs done by member">
               <ResponsiveContainer width="100%" height={210}>
                 <BarChart data={workloadData} layout="vertical" margin={{ left: 8 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke={GRID} />
@@ -265,12 +265,12 @@ export function DashboardPage() {
                   <Tooltip contentStyle={tip} />
                   <Legend wrapperStyle={{ fontSize: 12 }} />
                   <Bar dataKey="open" stackId="a" fill="#f59e0b" />
-                  <Bar dataKey="done" stackId="a" fill="#34d399" radius={[0, 4, 4, 0]} />
+                  <Bar dataKey="done" stackId="a" fill="#003049" radius={[0, 4, 4, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </ChartCard>
 
-            <ChartCard title="Project delivery" subtitle="Open vs done by key">
+            <ChartCard title="Projects" subtitle="Open vs done by project key">
               <ResponsiveContainer width="100%" height={210}>
                 <BarChart data={projectData}>
                   <CartesianGrid strokeDasharray="3 3" stroke={GRID} />
@@ -279,15 +279,15 @@ export function DashboardPage() {
                   <Tooltip contentStyle={tip} />
                   <Legend wrapperStyle={{ fontSize: 12 }} />
                   <Bar dataKey="open" stackId="p" fill={ACCENT} />
-                  <Bar dataKey="done" stackId="p" fill="#34d399" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="done" stackId="p" fill="#003049" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </ChartCard>
 
-            <ChartCard title="Overdue" subtitle="Past-due open issues">
+            <ChartCard title="Overdue" subtitle="Open work items past due date">
               {data.overdue.length === 0 ? (
                 <p className="grid min-h-[160px] place-content-center text-[13px] text-muted-foreground">
-                  Nothing overdue.
+                  No overdue work items.
                 </p>
               ) : (
                 <div className="divide-y divide-border overflow-hidden rounded-md border border-border">

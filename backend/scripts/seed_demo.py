@@ -583,7 +583,7 @@ def main() -> None:
 
         db.commit()
         print("Demo data loaded.")
-        print("Password for all users:", PASSWORD)
+        print("Shared password for seeded users: (value of SEED_PASSWORD, or local default)")
         print("Users: owner@example.com, admin@example.com, sara@example.com,")
         print("       karim@example.com, lina@example.com, nabil@example.com, viewer@example.com")
         print("Orgs: Acme Delivery (/acme), Northwind Cloud (/northwind)")

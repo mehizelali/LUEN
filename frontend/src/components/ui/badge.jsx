@@ -6,10 +6,10 @@ const badgeVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-teal-50 text-teal-800",
+        default: "bg-[#003049]/10 text-[#003049]",
         secondary: "bg-secondary text-muted-foreground",
         outline: "border border-border text-muted-foreground",
-        success: "bg-emerald-50 text-emerald-700",
+        success: "bg-[#003049]/10 text-[#003049]",
         warning: "bg-amber-50 text-amber-700",
         danger: "bg-rose-50 text-rose-700",
         info: "bg-sky-50 text-sky-700",

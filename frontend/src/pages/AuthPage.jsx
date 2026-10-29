@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "@/auth";
+import { Logo } from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -32,19 +33,17 @@ export function AuthPage() {
 
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background px-4">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(15,118,110,0.08),transparent_55%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,#e4e3df_1px,transparent_1px),linear-gradient(to_bottom,#e4e3df_1px,transparent_1px)] bg-[size:48px_48px] opacity-40" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(0,48,73,0.14),transparent_55%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[size:48px_48px] opacity-40" />
 
       <div className="relative w-full max-w-[380px]">
         <div className="mb-8 flex flex-col items-center text-center">
-          <div className="mb-4 grid size-9 place-items-center rounded-lg bg-primary text-sm font-bold text-primary-foreground">
-            K
-          </div>
-          <h1 className="text-xl font-semibold tracking-tight">
-            {mode === "login" ? "Sign in to KubeFlow" : "Create your workspace"}
+          <Logo className="mb-6 justify-center" markClassName="size-9" />
+          <h1 className="text-xl font-semibold tracking-tight text-[#003049]">
+            {mode === "login" ? "Sign in" : "Create an account"}
           </h1>
           <p className="mt-1.5 text-[13px] text-muted-foreground">
-            Issues, projects, and delivery — built for speed.
+            Manage organizations, projects, and work items.
           </p>
         </div>
 
@@ -62,11 +61,13 @@ export function AuthPage() {
               <Label htmlFor="email" className="text-[12px]">
                 Email
               </Label>
-              <Input
+                <Input
                 id="email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@company.com"
+                autoComplete="email"
                 required
               />
             </div>
@@ -79,6 +80,8 @@ export function AuthPage() {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+                autoComplete={mode === "login" ? "current-password" : "new-password"}
                 required
                 minLength={6}
               />
@@ -89,7 +92,7 @@ export function AuthPage() {
               </div>
             )}
             <Button type="submit" disabled={busy} className="mt-1 w-full">
-              {busy ? "Working…" : mode === "login" ? "Continue" : "Create account"}
+              {busy ? "Please wait…" : mode === "login" ? "Sign in" : "Create account"}
             </Button>
           </form>
         </div>
